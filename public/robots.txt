@@ -1,0 +1,7 @@
+# robots.txt for North & Vale Property
+# Fictional London Estate & Lettings Agency (Portfolio Demo by Zaza Digital)
+
+User-agent: *
+Allow: /
+
+Sitemap: https://northvaleproperty.example/sitemap.xml

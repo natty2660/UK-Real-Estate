@@ -1,0 +1,72 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-serif: 'Cormorant Garamond', Georgia, serif;
+    --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    font-family: var(--font-sans);
+    color: #191B1A;
+    background-color: #FDFCF7;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, .font-serif {
+    font-family: var(--font-serif);
+    letter-spacing: -0.015em;
+    font-feature-settings: "kern", "liga", "clig", "calt";
+  }
+
+  /* Accessible focus states */
+  *:focus-visible {
+    outline: 2px solid #9E7D47;
+    outline-offset: 2px;
+  }
+}
+
+/* Custom editorial aesthetic helper classes */
+.font-display {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+}
+
+.font-body {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* Subtle architectural divider */
+.hairline-border {
+  border-color: #E8E5DD;
+}
+
+/* Custom subtle scrollbar for photo ribbons and area filters */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.thin-scrollbar::-webkit-scrollbar {
+  height: 4px;
+  width: 4px;
+}
+.thin-scrollbar::-webkit-scrollbar-track {
+  background: #F4F2EB;
+}
+.thin-scrollbar::-webkit-scrollbar-thumb {
+  background: #C4BFB5;
+  border-radius: 2px;
+}
+.thin-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #9E7D47;
+}
+
+/* Prevent image layout shift with aspect ratios */
+img {
+  content-visibility: auto;
+}
