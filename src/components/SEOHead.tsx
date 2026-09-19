@@ -29,10 +29,8 @@ export function SEOHead({
   noindex = false
 }: SEOProps) {
   useEffect(() => {
-    // 1. Page Title
     document.title = title;
 
-    // Helper for meta tags
     const setMeta = (attrName: string, attrVal: string, content: string) => {
       let element = document.querySelector(`meta[${attrName}="${attrVal}"]`);
       if (!element) {
@@ -43,11 +41,9 @@ export function SEOHead({
       element.setAttribute('content', content);
     };
 
-    // 2. Meta description & viewport / robots
     setMeta('name', 'description', description);
     setMeta('name', 'robots', noindex ? 'noindex, nofollow' : 'index, follow');
 
-    // Canonical link
     const cleanPath = canonicalPath.startsWith('/') ? canonicalPath : `/${canonicalPath}`;
     const fullCanonicalUrl = cleanPath === '/' ? `${CANONICAL_BASE}/` : `${CANONICAL_BASE}${cleanPath}`;
 
@@ -59,7 +55,6 @@ export function SEOHead({
     }
     canonical.setAttribute('href', fullCanonicalUrl);
 
-    // 3. Open Graph
     setMeta('property', 'og:site_name', 'North & Vale Property');
     setMeta('property', 'og:locale', 'en_GB');
     setMeta('property', 'og:type', ogType);
@@ -68,13 +63,11 @@ export function SEOHead({
     setMeta('property', 'og:url', fullCanonicalUrl);
     setMeta('property', 'og:image', ogImage);
 
-    // 4. Twitter / X Cards
     setMeta('name', 'twitter:card', 'summary_large_image');
     setMeta('name', 'twitter:title', title);
     setMeta('name', 'twitter:description', description);
     setMeta('name', 'twitter:image', ogImage);
 
-    // 5. Schema.org JSON-LD generation
     const scriptId = 'schema-org-jsonld';
     let scriptElement = document.getElementById(scriptId) as HTMLScriptElement | null;
     if (!scriptElement) {
@@ -86,7 +79,6 @@ export function SEOHead({
 
     const schemasToInject: Array<Record<string, unknown>> = [];
 
-    // Optional BreadcrumbList schema
     if (breadcrumbs && breadcrumbs.length > 0) {
       schemasToInject.push({
         '@context': 'https://schema.org',
@@ -105,7 +97,6 @@ export function SEOHead({
       });
     }
 
-    // User-provided schemaData
     if (schemaData) {
       if (Array.isArray(schemaData)) {
         schemasToInject.push(...schemaData);
@@ -113,7 +104,6 @@ export function SEOHead({
         schemasToInject.push(schemaData);
       }
     } else {
-      // Default RealEstateAgent Organization schema
       schemasToInject.push({
         '@context': 'https://schema.org',
         '@type': 'RealEstateAgent',
@@ -141,23 +131,7 @@ export function SEOHead({
           { '@type': 'AdministrativeArea', name: 'Highgate' },
           { '@type': 'AdministrativeArea', name: 'Islington' },
           { '@type': 'AdministrativeArea', name: 'Camden' },
-          { '@type': 'AdministrativeArea', name: 'Stoke Newington' },
-          { '@type': 'AdministrativeArea', name: 'North London' },
-          { '@type': 'AdministrativeArea', name: 'Central London' }
-        ],
-        openingHoursSpecification: [
-          {
-            '@type': 'OpeningHoursSpecification',
-            dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
-            opens: '09:00',
-            closes: '18:30'
-          },
-          {
-            '@type': 'OpeningHoursSpecification',
-            dayOfWeek: ['Saturday'],
-            opens: '10:00',
-            closes: '16:00'
-          }
+          { '@type': 'AdministrativeArea', name: 'Stoke Newington' }
         ]
       });
     }
@@ -165,7 +139,7 @@ export function SEOHead({
     scriptElement.textContent = JSON.stringify(
       schemasToInject.length === 1 ? schemasToInject[0] : { '@context': 'https://schema.org', '@graph': schemasToInject }
     );
-  }, [title, description, canonicalPath, ogType, ogImage, breadcrumbs, schemaData]);
+  }, [title, description, canonicalPath, ogType, ogImage, breadcrumbs, schemaData, noindex]);
 
   return null;
 }
